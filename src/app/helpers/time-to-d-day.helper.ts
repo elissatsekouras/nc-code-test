@@ -31,5 +31,10 @@ export default function timeToDDay(date: Date): TimeToDDay {
   const secondsToDday =
     Math.floor(timeDifference / milliSecondsInASecond) % secondsInAMinute;
 
-  return { secondsToDday, minutesToDday, hoursToDday, daysToDday };
+  return {
+    secondsToDday: Math.max(secondsToDday, 0),
+    minutesToDday: Math.max(minutesToDday, 0),
+    hoursToDday: Math.max(hoursToDday, 0),
+    daysToDday: Math.max(daysToDday, 0),
+  };
 }
