@@ -1,0 +1,65 @@
+:host {
+  width: 100%;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+
+  .title {
+    position: absolute;
+    top: 0;
+    left: 8px;
+    transform: translateY(-50%);
+    padding: 0 4px;
+    background-color: var(--secondary-color);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+}
+
+input {
+  border: 1px solid var(--grey);
+  border-radius: 4px;
+  padding: 16px 12px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  background-color: transparent;
+  outline: none;
+  font-family: "Open Sauce One", sans-serif;
+  height: 55px;
+
+  &::placeholder {
+    color: var(--grey);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+
+  &:focus {
+    border-color: var(--black);
+
+    &::placeholder {
+      opacity: 0.5;
+    }
+  }
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: auto;
+}
