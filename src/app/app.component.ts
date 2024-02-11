@@ -19,7 +19,7 @@ import { HelperService } from './services/helper.service';
   providers: [HelperService, LocalStorageService],
   template: `
     <main>
-      <section class="countdown-app">
+      <section class="countdown-app" id="resizable-parent">
         <app-event-name [title]="event.name" />
         <app-countdown-timer [dDay]="event.date" />
         <div class="input-container">

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Subscription, interval } from 'rxjs';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Subscription, debounceTime, fromEvent, interval } from 'rxjs';
 import { HelperService } from '../../services/helper.service';
 import { TimeToDDay } from '../../types/time-to-d-day.type';
 
@@ -9,7 +9,7 @@ import { TimeToDDay } from '../../types/time-to-d-day.type';
   imports: [],
   providers: [HelperService],
   template: `
-    <div class="countdown-timer resizable-text">
+    <div #flexFontElement class="countdown-timer resizable-text">
       <span>{{ timeToDDay.daysToDday }} days, </span>
       <span>{{ timeToDDay.hoursToDday }}h, </span>
       <span>{{ timeToDDay.minutesToDday }}m, </span>
@@ -22,8 +22,10 @@ export class CountdownTimerComponent {
   constructor(private helpers: HelperService) {}
 
   @Input() dDay!: Date;
+  @ViewChild('flexFontElement') flexFontElementRef?: ElementRef;
 
   private timer: Subscription = new Subscription();
+  private resizeListener: any;
 
   timeToDDay: TimeToDDay = {
     daysToDday: 0,
@@ -40,7 +42,22 @@ export class CountdownTimerComponent {
     });
   }
 
+  ngAfterViewInit() {
+    this.helpers.flexFont(
+      'resizable-parent',
+      this.flexFontElementRef?.nativeElement,
+    );
+    this.resizeListener = fromEvent(window, 'resize').pipe(debounceTime(100));
+    this.resizeListener.subscribe(() => {
+      this.helpers.flexFont(
+        'resizable-parent',
+        this.flexFontElementRef?.nativeElement,
+      );
+    });
+  }
+
   ngOnDestroy() {
     this.timer.unsubscribe();
+    this.resizeListener.unsubscribe();
   }
 }
