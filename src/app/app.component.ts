@@ -4,6 +4,7 @@ import { EventNameComponent } from './components/event-name/event-name.component
 import { CountdownTimerComponent } from './components/countdown-timer/countdown-timer.component';
 import { InputComponent } from './components/input/input.component';
 import { Event } from './types/event.type';
+import { LocalStorageService } from './services/local-storage.service';
 import { HelperService } from './services/helper.service';
 
 @Component({
@@ -15,7 +16,7 @@ import { HelperService } from './services/helper.service';
     CountdownTimerComponent,
     InputComponent,
   ],
-  providers: [HelperService],
+  providers: [HelperService, LocalStorageService],
   template: `
     <main>
       <section class="countdown-app">
@@ -44,6 +45,7 @@ import { HelperService } from './services/helper.service';
 export class AppComponent {
   constructor(
     public helpers: HelperService,
+    private localStorage: LocalStorageService,
   ) {}
 
   event: Event = {
@@ -51,11 +53,28 @@ export class AppComponent {
     date: new Date('2024-02-13'),
   };
 
+  ngOnInit() {
+    const savedEvent = this.localStorage.getItem('event');
+    if (savedEvent) {
+      const { name, date } = JSON.parse(savedEvent);
+      this.event = {
+        name,
+        date: new Date(date),
+      };
+    }
+  }
+
+  saveEventToLocalStorage() {
+    this.localStorage.setItem('event', JSON.stringify(this.event));
+  }
+
   handleDateChange(e: any) {
     this.event.date = new Date(e.target.value);
+    this.saveEventToLocalStorage();
   }
 
   handleTitleChange(e: any) {
     this.event.name = e.target.value;
+    this.saveEventToLocalStorage();
   }
 }
