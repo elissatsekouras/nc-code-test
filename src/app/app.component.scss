@@ -1,0 +1,27 @@
+main {
+  padding: 24px;
+  padding-top: 64px;
+}
+
+.countdown-app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container {
+  width: 100%;
+  max-width: 580px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+
+  @media only screen and (max-width: 650px) {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 48px;
+    max-width: 278px;
+  }
+}
