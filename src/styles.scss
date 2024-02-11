@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sauce One", sans-serif;
+  background-color: var(--secondary-color);
+}
+
+:root {
+  --primary-color: #72035d;
+  --secondary-color: #f5f3f3;
+  --black: #000000;
+  --grey: #757575;
+}
